@@ -45,14 +45,17 @@ where
 {
     pub fn init<
         Arg0: ProxyArg<BigUint<Env::Api>>,
+        Arg1: ProxyArg<u64>,
     >(
         self,
         target: Arg0,
+        deadline: Arg1,
     ) -> TxTypedDeploy<Env, From, NotPayable, Gas, ()> {
         self.wrapped_tx
             .payment(NotPayable)
             .raw_deploy()
             .argument(&target)
+            .argument(&deadline)
             .original_result()
     }
 }
@@ -90,7 +93,29 @@ where
     ) -> TxTypedCall<Env, From, To, NotPayable, Gas, BigUint<Env::Api>> {
         self.wrapped_tx
             .payment(NotPayable)
-            .raw_call("target")
+            .raw_call("getTarget")
+            .original_result()
+    }
+
+    pub fn deadline(
+        self,
+    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, u64> {
+        self.wrapped_tx
+            .payment(NotPayable)
+            .raw_call("getDeadline")
+            .original_result()
+    }
+
+    pub fn deposit<
+        Arg0: ProxyArg<ManagedAddress<Env::Api>>,
+    >(
+        self,
+        donor: Arg0,
+    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, BigUint<Env::Api>> {
+        self.wrapped_tx
+            .payment(NotPayable)
+            .raw_call("getDeposit")
+            .argument(&donor)
             .original_result()
     }
 }

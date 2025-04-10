@@ -13,6 +13,7 @@ fn world() -> ScenarioWorld {
 
 const OWNER: TestAddress = TestAddress::new("owner");
 
+
 #[test]
 fn crowdfunding_deploy_test() {
     let mut world = world();
@@ -21,24 +22,17 @@ fn crowdfunding_deploy_test() {
 
 
 const CROWDFUNDING_ADDRESS: TestSCAddress = TestSCAddress::new("crowdfunding");
-    /*
-        Set up account
-    */
 
     let crowdfunding_address = world
         .tx()
         .from(OWNER)
         .typed(crowdfunding_proxy::CrowdfundingProxy)
-        .init(500_000_000_000u64)
+        .init(500_000_000_000u64, 123000u64)
         .code(CODE_PATH)
         .new_address(CROWDFUNDING_ADDRESS)
         .returns(ReturnsNewAddress)
         .run();
-    /*
-        Set up account
-        Deploy
-    */
-
+  
     assert_eq!(crowdfunding_address, CROWDFUNDING_ADDRESS.to_address());
 
     world.check_account(OWNER).balance(1_000_000);
@@ -49,5 +43,12 @@ const CROWDFUNDING_ADDRESS: TestSCAddress = TestSCAddress::new("crowdfunding");
         .typed(crowdfunding_proxy::CrowdfundingProxy)
         .target()
         .returns(ExpectValue(500_000_000_000u64))
+        .run();
+    world
+        .query()
+        .to(CROWDFUNDING_ADDRESS)
+        .typed(crowdfunding_proxy::CrowdfundingProxy)
+        .deadline()
+        .returns(ExpectValue(123000u64))
         .run();
 }
