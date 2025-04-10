@@ -35,6 +35,7 @@ sc-config.toml
 .DS_Store
 Thumbs.db
 
+
 # Arquivos de editor (VS Code, JetBrains, etc.)
 .vscode/
 .idea/
