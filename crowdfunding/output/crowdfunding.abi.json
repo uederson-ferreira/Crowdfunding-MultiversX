@@ -16,9 +16,6 @@
             "version": "0.57.1"
         }
     },
-    "docs": [
-        "An empty contract. To be used as a template when starting a new contract from scratch."
-    ],
     "name": "Crowdfunding",
     "constructor": {
         "inputs": [
@@ -33,11 +30,42 @@
         ],
         "outputs": []
     },
-    "upgradeConstructor": {
-        "inputs": [],
-        "outputs": []
-    },
     "endpoints": [
+        {
+            "name": "fund",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "EGLD"
+            ],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "status",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Status"
+                }
+            ]
+        },
+        {
+            "name": "getCurrentFunds",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "claim",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
         {
             "name": "getTarget",
             "mutability": "readonly",
@@ -76,5 +104,23 @@
     ],
     "esdtAttributes": [],
     "hasCallback": false,
-    "types": {}
+    "types": {
+        "Status": {
+            "type": "enum",
+            "variants": [
+                {
+                    "name": "FundingPeriod",
+                    "discriminant": 0
+                },
+                {
+                    "name": "Successful",
+                    "discriminant": 1
+                },
+                {
+                    "name": "Failed",
+                    "discriminant": 2
+                }
+            ]
+        }
+    }
 }

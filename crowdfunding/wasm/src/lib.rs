@@ -5,10 +5,9 @@
 ////////////////////////////////////////////////////
 
 // Init:                                 1
-// Upgrade:                              1
-// Endpoints:                            3
+// Endpoints:                            7
 // Async Callback (empty):               1
-// Total number of exported functions:   6
+// Total number of exported functions:   9
 
 #![no_std]
 
@@ -19,7 +18,10 @@ multiversx_sc_wasm_adapter::endpoints! {
     crowdfunding
     (
         init => init
-        upgrade => upgrade
+        fund => fund
+        status => status
+        getCurrentFunds => get_current_funds
+        claim => claim
         getTarget => target
         getDeadline => deadline
         getDeposit => deposit
